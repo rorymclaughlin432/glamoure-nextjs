@@ -10,14 +10,13 @@ import { authOptions } from '../api/auth/[...nextauth]/route';
 
 async function searchProducts(formData: FormData) {
     "use server";
-
-    const searchQuery = formData.get('searchQuery')?.toString();
-
+  
+    const searchQuery = formData.get("searchQuery")?.toString();
+  
     if (searchQuery) {
-        redirect(`/search?q=${searchQuery}`);   
-        
+      redirect("/search?query=" + searchQuery);
     }
-}
+  }
 
 export default async function Navbar() {
     const session = await getServerSession(authOptions);
@@ -36,8 +35,7 @@ export default async function Navbar() {
                 <div className='form-control'>
                     <input 
                     name='searchQuery'
-                    placeholder="Search" 
-                    type='text'
+                    placeholder="Search"
                     className='input input-bordered w-full min-w-[100px]' />
                 </div>
             </form>

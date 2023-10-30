@@ -9,15 +9,16 @@ interface ShoppingCartButtonProps {
 }
 
 export default function ShoppingCartButton({ cart }: ShoppingCartButtonProps) {
-    function closeDropdown() {
-        const element = document.activeElement as HTMLElement;
-        if (element) {
-            element.blur();
-        }
+  function closeDropdown() {
+    const elem = document.activeElement as HTMLElement;
+    if (elem) {
+      elem.blur();
     }
-    return (
-    <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-circle btn-ghost">
+  }
+
+  return (
+    <div className="dropdown-end dropdown">
+      <label tabIndex={0} className="btn-ghost btn-circle btn">
         <div className="indicator">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,22 +39,24 @@ export default function ShoppingCartButton({ cart }: ShoppingCartButtonProps) {
           </span>
         </div>
       </label>
-      <div tabIndex={0} className="card dropdown-content card-compact mt-3 w-52 bg-base-100 shadow z-13">
+      <div
+        tabIndex={0}
+        className="card dropdown-content card-compact z-30 mt-3 w-52 bg-base-100 shadow"
+      >
         <div className="card-body">
-            <span className="text-lg font-bold">
-                {cart?.size || 0} Items
-            </span>
-            <span className="text-info">
-                Subtotal: {formatPrice(cart?.subtotal || 0)}
-            </span>
-            <div className="card-actions">
-                <Link href="/cart"
-                className="btn btn-primary btn-block"
-                onClick={closeDropdown}
-                >
-                    View Cart
-                </Link>
-            </div>
+          <span className="text-lg font-bold">{cart?.size || 0} Items</span>
+          <span className="text-info">
+            Subtotal: {formatPrice(cart?.subtotal || 0)}
+          </span>
+          <div className="card-actions">
+            <Link
+              href="/cart"
+              className="btn-primary btn-block btn"
+              onClick={closeDropdown}
+            >
+              View cart
+            </Link>
+          </div>
         </div>
       </div>
     </div>
