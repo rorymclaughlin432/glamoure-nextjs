@@ -43,7 +43,7 @@ export default async function Home({ searchParams: {page = "1"} }: HomeProps) {
             <p className="py-6">{productsItems[0].description}</p>
             <Link
               href={`/products/${productsItems[0].id}`}
-              className="btn btn-primary"
+              className="btn btn-outline btn-success"
             >
               Check it Out
             </Link>

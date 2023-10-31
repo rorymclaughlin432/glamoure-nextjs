@@ -26,7 +26,7 @@ export async function generateMetadata({params : {id}}: ProductPageProps): Promi
     const product = await getProduct(id);
 
     return {
-        title: product.name + ' - Flowmazon',
+        title: product.name + ' - Commence',
         description: product.description,
         openGraph: {
             images: [{url: product.imageUrl}],

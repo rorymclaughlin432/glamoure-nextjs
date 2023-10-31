@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function Footer() {
     return (
-      <footer className="bg-neutral p-10 text-neutral-content">
+      <footer className="bg-success p-10 text-neutral-content">
         <div className="footer m-auto max-w-7xl">
           <div>
             <span className="footer-title">Services</span>
@@ -11,7 +13,7 @@ export default function Footer() {
           </div>
           <div>
             <span className="footer-title">Company</span>
-            <a className="link-hover link">About us</a>
+            <Link href={`/AboutUs/`} className="link-hover link">About Us</Link>
             <a className="link-hover link">Contact</a>
             <a className="link-hover link">Jobs</a>
             <a className="link-hover link">Press kit</a>

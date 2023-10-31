@@ -4,7 +4,7 @@ import { setProductQuantity } from "./actions";
 import { formatPrice } from "@/src/lib/format";
 
 export const metadata = {
-  title: "Your Cart - Flowmazon",
+  title: "Your Cart - Glamouré",
 };
 
 export default async function cartPage() {
@@ -24,7 +24,7 @@ export default async function cartPage() {
       <p className="mb-3 font-bold">
         Total: {formatPrice(cart?.subtotal || 0)}
       </p>
-      <button className="btn btn-primary sm:w-[200px]">Checkout</button>
+      <button className="btn btn-outline btn-success sm:w-[200px]">Checkout</button>
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ export default function ShoppingCartButton({ cart }: ShoppingCartButtonProps) {
           <div className="card-actions">
             <Link
               href="/cart"
-              className="btn-primary btn-block btn"
+              className="btn btn-outline btn-success"
               onClick={closeDropdown}
             >
               View cart
