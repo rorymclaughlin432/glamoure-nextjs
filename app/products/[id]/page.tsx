@@ -28,6 +28,7 @@ export async function generateMetadata({params : {id}}: ProductPageProps): Promi
     return {
         title: product.name + ' - Commence',
         description: product.description,
+        metadataBase: new URL("http://localhost:3000/"),
         openGraph: {
             images: [{url: product.imageUrl}],
         },
