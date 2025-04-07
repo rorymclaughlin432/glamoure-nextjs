@@ -4,15 +4,14 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import PaginationBar from "@/components/PaginationBar";
 
-interface HomeProps {
-  searchParams: { page: string };
-}
-
-export default async function Home({ searchParams }: { searchParams: HomeProps["searchParams"] }) {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   searchParams = await searchParams;
   const pageParam = await searchParams?.page;
-  const currentPage =
-    parseInt(typeof pageParam === "string" ? pageParam : "1", 10) || 1;
+  const currentPage = parseInt(pageParam || "1", 10);
 
   const pageSize = 6;
   const heroItemCount = 1;
@@ -57,7 +56,7 @@ export default async function Home({ searchParams }: { searchParams: HomeProps["
         {(currentPage === 1 ? productsItems.slice(1) : productsItems).map(
           (product) => (
             <ProductCard product={product} key={product.id} />
-          ),
+          )
         )}
       </div>
       {totalPages > 1 && (
