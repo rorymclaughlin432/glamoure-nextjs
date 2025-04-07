@@ -4,11 +4,27 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import PaginationBar from "@/components/PaginationBar";
 
-export default async function Home({
+interface HomeProps {
+  searchParams: { page?: string | string[] | undefined };
+}
+import { Metadata } from "next";
+
+export async function generateMetadata({
   searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+}: HomeProps): Promise<Metadata> {
+  searchParams = await searchParams;
+  const pageParam = await searchParams?.page;
+  const currentPage = parseInt(
+    Array.isArray(pageParam) ? pageParam[0] : pageParam || "1",
+    10
+  );
+
+  return {
+    title: `Page ${currentPage} - Glamouré`,
+  };
+}
+
+export default async function Home({ searchParams }: HomeProps) {
   searchParams = await searchParams;
   const pageParam = await searchParams?.page;
   const currentPage = parseInt(
