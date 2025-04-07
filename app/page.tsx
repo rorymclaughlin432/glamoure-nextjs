@@ -7,13 +7,13 @@ import PaginationBar from "@/components/PaginationBar";
 export const dynamic = "force-dynamic";
 
 interface HomePageProps {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function Home({ searchParams }: HomePageProps) {
-  const pageParam = searchParams.page;
+  const { page } = await searchParams;
   const currentPage = parseInt(
-    Array.isArray(pageParam) ? pageParam[0] : pageParam ?? "1",
+    Array.isArray(page) ? page[0] : page ?? "1",
     10
   );
 
