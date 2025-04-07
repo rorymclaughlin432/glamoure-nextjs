@@ -10,9 +10,9 @@ import { incrementProductQuantity } from "./actions";
 export const dynamic = "force-dynamic"; // 👈 REQUIRED to access params in generateMetadata
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 const getProduct = cache(async (id: string) => {
@@ -26,7 +26,7 @@ const getProduct = cache(async (id: string) => {
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-    const { id } = await params;
+  const { id } = await params;
   const product = await getProduct(id);
 
   return {
@@ -42,7 +42,7 @@ export async function generateMetadata({
 export default async function ProductPage({
   params,
 }: ProductPageProps) {
-    const { id } = await params;
+  const { id } = await params;
   const product = await getProduct(id);
 
   return (
