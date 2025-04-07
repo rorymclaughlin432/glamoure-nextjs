@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import PaginationBar from "@/components/PaginationBar";
-import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 interface HomePageProps {
   searchParams: { page: string };
 }
