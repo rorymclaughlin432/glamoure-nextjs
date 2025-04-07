@@ -8,7 +8,7 @@ interface HomeProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function Home({ searchParams }: HomeProps) {
+export default async function Home({ searchParams }: { searchParams: HomeProps["searchParams"] }) {
   searchParams = await searchParams;
   const pageParam = await searchParams?.page;
   const currentPage =
