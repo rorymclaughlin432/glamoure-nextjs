@@ -1,31 +1,37 @@
 "use client";
 
-import { ComponentProps } from "react";
-// ts-ignore because experimental_useFormStatus is not in the types
-// @ts-ignore
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { ComponentProps, useState } from "react";
 
 type FormSubmitButtonProps = {
-        children: React.ReactNode;
-        className?: string;
+  children: React.ReactNode;
+  className?: string;
 } & ComponentProps<"button">;
 
 export default function FormSubmitButton({
-    children, 
-    className,
-    ...props
-} : FormSubmitButtonProps) {
-    const { pending } = useFormStatus();
+  children,
+  className,
+  ...props
+}: FormSubmitButtonProps) {
+  const [isPending, setIsPending] = useState(false);
 
-    return (
-        <button 
-        {...props}
-        className={`btn btn-primary btn-block ${className}`}
-        type="submit" 
-        disabled={pending}>
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    setIsPending(true);
+    if (props.onClick) {
+      await props.onClick(event);
+    }
+    setIsPending(false);
+  };
 
-        {pending && <i className="fa fa-spinner fa-spin"></i>}
-        {children}
-        </button>
-    )
+  return (
+    <button
+      {...props}
+      className={`btn btn-primary btn-block ${className}`}
+      type="submit"
+      disabled={isPending}
+      onClick={handleClick}
+    >
+      {isPending && <i className="fa fa-spinner fa-spin"></i>}
+      {children}
+    </button>
+  );
 }

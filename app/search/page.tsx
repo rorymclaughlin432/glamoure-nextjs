@@ -2,21 +2,31 @@ import ProductCard from "@/components/ProductCard";
 import { prisma } from "@/src/lib/db/prisma";
 import { Metadata } from "next";
 
+// Define the SearchPageProps interface with the correct type for searchParams
 interface SearchPageProps {
-  searchParams: { query: string };
+  searchParams: Promise<{
+    query?: string;
+  }>;
 }
 
-export function generateMetadata({
-  searchParams: { query },
-}: SearchPageProps): Metadata {
+/*
+  Uncomment and fix generateMetadata if you want to use it
+export async function generateMetadata({
+  searchParams,
+}: SearchPageProps): Promise<Metadata> {
+  searchParams = await searchParams; // Await the searchParams promise
+  const query = searchParams?.query || "Search";
+
   return {
     title: `Search: ${query} - Glamouré`,
   };
 }
+*/
 
-export default async function SearchPage({
-  searchParams: { query },
-}: SearchPageProps) {
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const query = resolvedSearchParams?.query || "";
+
   const productItems = await prisma.products.findMany({
     where: {
       OR: [

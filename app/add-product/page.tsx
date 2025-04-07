@@ -1,7 +1,7 @@
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { prisma } from "@/src/lib/db/prisma";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/src/lib/auth/authOptions";
 import { getServerSession } from "next-auth";
 
 export const metadata = {
