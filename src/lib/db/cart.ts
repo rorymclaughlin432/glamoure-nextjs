@@ -1,5 +1,5 @@
 import { prisma } from "@/src/lib/db/prisma";
-import { cookies } from "next/dist/client/components/headers";
+import { cookies } from "next/headers";
 import { Cart, CartItem, Prisma } from "@prisma/client";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
@@ -28,7 +28,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
       include: { items: { include: { product: true } } },
     });
   } else {
-    const localCartId = cookies().get("localCartId")?.value;
+    const localCartId = (await cookies()).get("localCartId")?.value;
     cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
@@ -69,7 +69,7 @@ export async function createCart(): Promise<ShoppingCart> {
     });
 
     //TODO encryption and security for settings in real prod app
-    cookies().set("localCartId", newCart.id);
+    (await cookies()).set("localCartId", newCart.id);
   }
 
   return {
@@ -81,7 +81,7 @@ export async function createCart(): Promise<ShoppingCart> {
 }
 
 export async function mergeAnonymousCartIntoUserCart(userId: string) {
-  const localCartId = cookies().get("localCartId")?.value;
+  const localCartId = (await cookies()).get("localCartId")?.value;
 
   const localCart = localCartId
     ? await prisma.cart.findUnique({
@@ -140,7 +140,7 @@ export async function mergeAnonymousCartIntoUserCart(userId: string) {
         });
     }
     await tx.cart.delete({ where: { id: localCart.id } });
-    cookies().set("localCartId", "");
+    (await cookies()).set("localCartId", "");
   });
 }
 
