@@ -5,7 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import PaginationBar from "@/components/PaginationBar";
 
 interface HomeProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { page: string };
 }
 
 export default async function Home({ searchParams }: { searchParams: HomeProps["searchParams"] }) {
