@@ -3,19 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import PaginationBar from "@/components/PaginationBar";
+
 export const dynamic = "force-dynamic";
+
 interface HomePageProps {
-  searchParams: { page: string };
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
-
-export default async function Home({
-  searchParams,
-}: HomePageProps) {
-  searchParams = await searchParams;
-  const pageParam = await searchParams?.page;
+export default async function Home({ searchParams }: HomePageProps) {
+  const pageParam = searchParams?.page;
   const currentPage = parseInt(
-    Array.isArray(pageParam) ? pageParam[0] : pageParam || "1",
+    Array.isArray(pageParam) ? pageParam[0] : pageParam ?? "1",
     10
   );
 
