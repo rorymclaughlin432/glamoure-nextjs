@@ -7,11 +7,14 @@ import PaginationBar from "@/components/PaginationBar";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   searchParams = await searchParams;
   const pageParam = await searchParams?.page;
-  const currentPage = parseInt(pageParam || "1", 10);
+  const currentPage = parseInt(
+    Array.isArray(pageParam) ? pageParam[0] : pageParam || "1",
+    10
+  );
 
   const pageSize = 6;
   const heroItemCount = 1;
