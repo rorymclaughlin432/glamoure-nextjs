@@ -7,6 +7,22 @@ export default function SuccessPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const clearCartAfterPayment = async () => {
+      try {
+        const response = await fetch('/api/clear-cart', {
+          method: 'POST',
+        });
+
+        if (!response.ok) {
+          console.error('Failed to clear the cart:', await response.text());
+        }
+      } catch (error) {
+        console.error('Error clearing the cart:', error);
+      }
+    };
+
+    clearCartAfterPayment();
+
     const timer = setTimeout(() => {
       router.push('/');
     }, 5000); // ⏳ 5 seconds delay

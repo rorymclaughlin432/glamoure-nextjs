@@ -25,7 +25,7 @@ export default function ShoppingCartButton({ cart }: ShoppingCartButtonProps) {
             className="h-5 w-5"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
+            stroke="white"
           >
             <path
               strokeLinecap="round"
@@ -45,13 +45,13 @@ export default function ShoppingCartButton({ cart }: ShoppingCartButtonProps) {
       >
         <div className="card-body">
           <span className="text-lg font-bold">{cart?.size || 0} Items</span>
-          <span className="text-info">
+          <span className="text-black">
             Subtotal: {formatPrice(cart?.subtotal || 0)}
           </span>
           <div className="card-actions">
             <Link
               href="/cart"
-              className="btn btn-outline btn-success"
+              className="btn btn-outline btn-info"
               onClick={closeDropdown}
             >
               View cart

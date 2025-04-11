@@ -80,7 +80,7 @@ export default async function AddProductPage() {
           type="number"
           className="input input-bordered mb-3 w-full"
         />
-        <FormSubmitButton className={`btn btn-primary`}>
+        <FormSubmitButton className={`btn btn-info`}>
           Add Product
         </FormSubmitButton>
       </form>

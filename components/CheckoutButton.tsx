@@ -47,7 +47,7 @@ export const CheckoutButton: FC<CheckoutButtonProps> = ({ cartItems }) => {
 
   return (
     <button
-      className="btn btn-success btn-outline sm:w-[200px]"
+      className="btn btn-info btn-outline sm:w-[200px]"
       onClick={handleCheckout}
     >
       Checkout

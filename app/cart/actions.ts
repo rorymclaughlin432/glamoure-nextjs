@@ -3,6 +3,7 @@
 import { createCart, getCart } from "@/src/lib/db/cart";
 import { prisma } from "@/src/lib/db/prisma";
 import { revalidatePath } from "next/cache";
+import { useCart } from "./CartContext";
 
 export async function setProductQuantity(productId: string, quantity: number) {
   const cart = (await getCart()) ?? (await createCart());
@@ -11,7 +12,7 @@ export async function setProductQuantity(productId: string, quantity: number) {
 
   if(quantity === 0) {
     if(articleInCart) {
-      
+
       //routed over cart model
       await prisma.cart.update({
         where: { id: cart.id },
@@ -51,4 +52,23 @@ export async function setProductQuantity(productId: string, quantity: number) {
   }
 
   revalidatePath("/cart");
+}
+
+export async function clearCart(setCartCount: (count: number) => void) {
+  const cart = await getCart();
+
+  if (!cart) {
+    console.error("No cart found to clear.");
+    return;
+  }
+
+  await prisma.cart.update({
+    where: { id: cart.id },
+    data: { items: { deleteMany: {} } }, // Deletes all items in the cart
+  });
+
+  // Update the cart count in the context
+  setCartCount(0);
+
+  revalidatePath("/cart"); // Revalidate the cart page to reflect the changes
 }
