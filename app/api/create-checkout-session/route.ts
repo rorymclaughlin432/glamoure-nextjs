@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("Missing STRIPE_SECRET_KEY environment variable");
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2022-11-15',
+  apiVersion: "2022-11-15",
 });
 
 export async function POST(req: Request) {
@@ -30,6 +34,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ sessionId: session.id });
   } catch (err) {
     console.error("Error creating checkout session:", err);
-    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create checkout session" },
+      { status: 500 },
+    );
   }
 }
