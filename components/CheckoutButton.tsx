@@ -10,16 +10,28 @@ import { FC } from "react";
 
 interface CheckoutButtonProps {
   cartItems: Array<{ id: string; quantity: number }>;
+  user: { id: string; email: string } | null;
 }
 
-export const CheckoutButton: FC<CheckoutButtonProps> = ({ cartItems }) => {
+export const CheckoutButton: FC<CheckoutButtonProps> = ({ cartItems, user }) => {
   const handleCheckout = async () => {
+    if (!user) {
+      alert("You must be logged in to proceed to checkout.");
+      return;
+    }
+
     const stripe = await stripePromise;
     console.log("Cart items sent to API:", cartItems);
     const response = await fetch("/api/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cartItems }),
+      body: JSON.stringify({
+        items: {cartItems, userId: user.id},
+        metadata: {
+          userId: user.id,
+          cartItems: JSON.stringify(cartItems),
+        },
+      }),
     });
 
     if (!response.ok) {

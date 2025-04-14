@@ -3,11 +3,24 @@ import CartEntry from "./CartEntry";
 import { setProductQuantity } from "./actions";
 import { formatPrice } from "@/src/lib/format";
 import { CheckoutButton } from "@/components/CheckoutButton";
+import { getUser } from "@/src/lib/db/user";
+
 export const metadata = {
   title: "Your Cart - Glamouré",
 };
 
 export default async function cartPage() {
+  const currentUser = await getUser();
+  if (!currentUser) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-lg font-bold">
+          You must be logged in to view your cart.
+        </p>
+      </div>
+    );
+  }
+
   const cart = await getCart();
   return (
     <div>
@@ -32,6 +45,11 @@ export default async function cartPage() {
               price: Number(price),
               name: name,
             })) || []
+          }
+          user={
+            currentUser && currentUser.email
+              ? { id: currentUser.id, email: currentUser.email }
+              : null
           }
         />
         <p className="text-sm text-gray-500">

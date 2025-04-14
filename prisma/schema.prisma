@@ -38,6 +38,8 @@ model CartItem {
   cartId    String   @db.ObjectId
   product   products @relation(fields: [productId], references: [id], onDelete: Cascade)
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.ObjectId
 
   @@map("cartItem")
 }
@@ -81,6 +83,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Cart          Cart[]
+  orders         Order[]
 
   @@map("users")
 }
@@ -93,4 +96,18 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+model Order {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String     @db.ObjectId
+  user          User       @relation(fields: [userId], references: [id])
+  items         Json
+  totalAmount   Float
+  paymentStatus String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  CartItem      CartItem[]
+
+  @@map("order")
 }
