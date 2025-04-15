@@ -33,14 +33,14 @@ export default async function Home({ searchParams }: HomePageProps) {
   return (
     <div className="flex flex-col items-center">
       {currentPage === 1 && (
-        <div className="hero rounded-xl bg-base-200">
+        <div className="hero rounded-xl bg-base-200 shadow-xl mb-4">
           <div className="hero-content flex-col lg:flex-row">
             <Image
               src={productsItems[0].imageUrl}
               alt={productsItems[0].name}
               width={400}
               height={800}
-              className="w-full max-w-sm rounded-lg shadow-2xl"
+              className="w-full max-w-sm rounded-lg shadow-2xl object-cover h-48"
               priority
             />
             <div>

@@ -9,6 +9,7 @@ const nextConfig = {
         "lh3.googleusercontent.com",
       ],
       remotePatterns: [
+        { hostname: "i.ibb.co" },
         { hostname: "images.unsplash.com" },
         { hostname: "lh3.googleusercontent.com" },
       ],

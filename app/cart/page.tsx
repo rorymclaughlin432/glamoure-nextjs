@@ -1,6 +1,6 @@
 import { getCart } from "@/src/lib/db/cart";
 import CartEntry from "./CartEntry";
-import { setProductQuantity } from "./actions";
+import { setProductQuantity, removeItem } from "./actions"; // Import removeItem
 import { formatPrice } from "@/src/lib/format";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { getUser } from "@/src/lib/db/user";
@@ -22,14 +22,16 @@ export default async function cartPage() {
   }
 
   const cart = await getCart();
+
   return (
-    <div>
+    <div className="container mx-auto p-4 flex flex-col bg-gray-100 rounded-lg shadow-md">
       <h1 className="text-3xl mb-6 font-bold">Your Cart</h1>
       {cart?.items.map((cartItem) => (
         <CartEntry
-          cartItem={cartItem}
           key={cartItem.id}
+          cartItem={cartItem}
           setProductQuantity={setProductQuantity}
+          removeItem={removeItem} // Pass removeItem directly
         />
       ))}
       {!cart?.items.length && <p>Your cart is empty</p>}

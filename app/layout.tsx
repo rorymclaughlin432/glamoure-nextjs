@@ -5,7 +5,7 @@ import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import SessionProvider from "./SessionProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "Glamouré",
@@ -23,7 +23,7 @@ export default function RootLayout({
         <div className="flex min-h-screen flex-col">
           <SessionProvider>
             <Navbar />
-            <main className="flex-grow px-4 py-8">
+            <main className="container m-auto min-w-[300px] px-4 py-8">
               {children}
             </main>
             <Footer />
