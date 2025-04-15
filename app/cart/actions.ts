@@ -3,9 +3,6 @@
 import { createCart, getCart } from "@/src/lib/db/cart";
 import { prisma } from "@/src/lib/db/prisma";
 import { revalidatePath } from "next/cache";
-import { useCart } from "./CartContext";
-
-export async function setProductQuantity(productId: string, quantity: number) {
   const cart = (await getCart()) ?? (await createCart());
 
   const articleInCart = cart.items.find((item) => item.productId === productId);
