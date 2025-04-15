@@ -66,6 +66,7 @@ export default function CartEntry({
           </div>
           <button
             className="btn btn-error btn-sm mt-2"
+            disabled={isPending}
             onClick={() => {
               startTransition(async () => {
                 await removeItem(product.id);
