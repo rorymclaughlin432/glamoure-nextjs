@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo_alt.png'
 import { redirect } from 'next/navigation';
 import { getCart } from '@/src/lib/db/cart';
 import ShoppingCartButton from './ShoppingCartButton';
@@ -22,12 +22,11 @@ export default async function Navbar() {
     const session = await getServerSession(authOptions);
     const cart = await getCart();
   return (
-  <div className="bg-base-100">
+  <div className="bg-info">
     <div className="navbar max-w-7xl m-auto flex-col sm:flex-row gap-2">
         <div className="flex-1">
-            <Link href="/" className='btn btn-ghost text-xl normal-case'>
-                <Image src={logo} alt="Glamouré Logo" width={40} height={40} />
-                Glamouré
+            <Link href="/" className='btn btn-info text-xl normal-case'>
+                <Image src={logo} alt="Glamouré Logo" width={150} height={40} />
             </Link>
         </div>
         <div className='flex-none gap-2'>
