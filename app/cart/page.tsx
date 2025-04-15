@@ -24,7 +24,7 @@ export default async function cartPage() {
   const cart = await getCart();
   return (
     <div>
-      <h1 className="txt=3xl mb-6 font-bold">Your Cart</h1>
+      <h1 className="text-3xl mb-6 font-bold">Your Cart</h1>
       {cart?.items.map((cartItem) => (
         <CartEntry
           cartItem={cartItem}
