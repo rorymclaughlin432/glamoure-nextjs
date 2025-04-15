@@ -26,7 +26,7 @@ export default async function Navbar() {
     <div className="navbar max-w-7xl m-auto flex-col sm:flex-row gap-2">
         <div className="flex-1">
             <Link href="/" className='btn btn-info text-xl normal-case'>
-                <Image src={logo} alt="Glamouré Logo" width={150} height={40} />
+                <Image src={logo} alt="Glamouré Logo" width={150} height={40} priority  />
             </Link>
         </div>
         <div className='flex-none gap-2'>

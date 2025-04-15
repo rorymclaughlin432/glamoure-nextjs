@@ -9,44 +9,25 @@ export async function setProductQuantity(productId: string, quantity: number) {
 
   const articleInCart = cart.items.find((item) => item.productId === productId);
 
-  if(quantity === 0) {
-    if(articleInCart) {
-
-      //routed over cart model
+  if (quantity === 0) {
+    if (articleInCart) {
       await prisma.cart.update({
         where: { id: cart.id },
         data: { items: { delete: { id: articleInCart.id } } },
-      })
-
-      //solely routed over cartItem model
-      /* await prisma.cartItem.delete({
-        where: { id: articleInCart.id },
-      }); */
-
+      });
     }
     return;
   } else {
-    if(articleInCart) {
+    if (articleInCart) {
       await prisma.cart.update({
         where: { id: cart.id },
         data: { items: { update: { where: { id: articleInCart.id }, data: { quantity } } } },
-      })
-      /* await prisma.cartItem.update({
-        where: { id: articleInCart.id },
-        data: { quantity },
-      }); */
+      });
     } else {
       await prisma.cart.update({
         where: { id: cart.id },
         data: { items: { create: { productId, quantity } } },
-      })
-      /* await prisma.cartItem.create({
-        data: {
-          cartId: cart.id,
-          productId,
-          quantity,
-        },
-      }); */
+      });
     }
   }
 
@@ -66,8 +47,29 @@ export async function clearCart(setCartCount: (count: number) => void) {
     data: { items: { deleteMany: {} } }, // Deletes all items in the cart
   });
 
-  // Update the cart count in the context
   setCartCount(0);
 
   revalidatePath("/cart"); // Revalidate the cart page to reflect the changes
+}
+
+export async function removeItem(productId: string) {
+  const cart = await getCart();
+
+  if (!cart) {
+    throw new Error("No cart found for the current user");
+  }
+
+  const cartItem = cart.items.find((item) => item.productId === productId);
+
+  if (!cartItem) {
+    throw new Error("Item not found in the cart");
+  }
+
+  // Remove the item from the cart
+  await prisma.cart.update({
+    where: { id: cart.id },
+    data: { items: { delete: { id: cartItem.id } } },
+  });
+
+  revalidatePath("/cart");
 }
