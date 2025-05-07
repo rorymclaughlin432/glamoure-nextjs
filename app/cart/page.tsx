@@ -1,6 +1,6 @@
 import { getCart } from "@/src/lib/db/cart";
 import CartEntry from "./CartEntry";
-import { setProductQuantity, removeItem } from "./actions"; // Import removeItem
+import { setProductQuantity, removeItem } from "./actions";
 import { formatPrice } from "@/src/lib/format";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { getUser } from "@/src/lib/db/user";
@@ -24,19 +24,25 @@ export default async function cartPage() {
   const cart = await getCart();
 
   return (
-    <div className="container mx-auto p-4 flex flex-col bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-3xl mb-6 font-bold">Your Cart</h1>
+    <div className="container mx-auto flex flex-col rounded-lg bg-gray-100 p-4 shadow-md">
+      <h1 className="mb-6 text-3xl font-bold">
+        Your Cart:{" "}
+        {cart?.items.length === 1
+          ? "1 Item"
+          : `${cart?.items.length || 0} Items`}
+      </h1>
       {cart?.items.map((cartItem) => (
-        <CartEntry
-          key={cartItem.id}
-          cartItem={cartItem}
-          setProductQuantity={setProductQuantity}
-          removeItem={removeItem} // Pass removeItem directly
-        />
+        <div key={cartItem.id}>
+          <CartEntry
+            cartItem={cartItem}
+            setProductQuantity={setProductQuantity}
+            removeItem={removeItem}
+          />
+        </div>
       ))}
       {!cart?.items.length && <p>Your cart is empty</p>}
-      <div className="flex flex-col items-end sm:items-center">
-        <p className="mb-3 font-bold">
+      <div className="flex flex-col items-center">
+        <p className="mt-4 mb-3 font-bold">
           Total: {formatPrice(cart?.subtotal || 0)}
         </p>
         <CheckoutButton
@@ -54,7 +60,7 @@ export default async function cartPage() {
               : null
           }
         />
-        <p className="text-sm text-gray-500">
+        <p className="text-sm mt-5 text-gray-500">
           *You will be redirected to Stripe to complete your purchase.
         </p>
       </div>

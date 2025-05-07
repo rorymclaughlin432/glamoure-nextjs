@@ -4,8 +4,8 @@ import Image from "next/image";
 import PriceTag from "@/components/PriceTag";
 import { Metadata } from "next";
 import { cache } from "react";
-import AddToCartButton from "./AddToCartButton";
 import { incrementProductQuantity } from "./actions";
+import QuantitySelector from "../../../components/QuantitySelector";
 
 export const dynamic = "force-dynamic"; // 👈 REQUIRED to access params in generateMetadata
 
@@ -59,9 +59,9 @@ export default async function ProductPage({
         <h1 className="text-5xl font-bold">{product.name}</h1>
         <PriceTag price={Number(product.price)} classname="mt-4" />
         <p className="py-6">{product.description}</p>
-        <AddToCartButton
+         {/* Quantity Selector */}
+         <QuantitySelector
           productId={product.id}
-          incrementProductQuantity={incrementProductQuantity}
         />
       </div>
     </div>

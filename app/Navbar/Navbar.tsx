@@ -20,7 +20,17 @@ async function searchProducts(formData: FormData) {
 
 export default async function Navbar() {
     const session = await getServerSession(authOptions);
-    const cart = await getCart();
+    const cartData = await getCart();
+    const cart = cartData
+      ? {
+          ...cartData,
+          items: cartData.items.map(item => ({
+            ...item,
+            name: item.product.name,
+            price: item.product.price,
+          })),
+        }
+      : null;
   return (
   <div className="bg-info">
     <div className="navbar max-w-7xl m-auto flex-col sm:flex-row gap-2">
