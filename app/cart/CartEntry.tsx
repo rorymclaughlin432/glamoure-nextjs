@@ -1,9 +1,10 @@
 "use client";
 
 import { CartItemWithProduct } from "@/src/lib/db/cart";
-import { formatPrice } from "@/src/lib/format";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { formatPrice } from "@/src/lib/format";
 import { useTransition } from "react";
 
 interface CartEntryProps {
@@ -13,71 +14,57 @@ interface CartEntryProps {
 }
 
 export default function CartEntry({
-  cartItem: { product, quantity },
+  cartItem,
   setProductQuantity,
   removeItem,
-}: CartEntryProps) {
+ }: CartEntryProps) {
   const [isPending, startTransition] = useTransition();
+  const handleQuantityChange: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
+    const newQuantity: number = Math.max(1, Number(event.target.value));
+    await setProductQuantity(cartItem.product.id, newQuantity);
+    redirect("/cart"); // Reload the page to reflect changes
+  };
 
-  const quantityOptions: JSX.Element[] = [];
-  for (let i = 1; i <= 99; i++) {
-    quantityOptions.push(
-      <option value={i} key={i}>
-        {i}
-      </option>
-    );
-  }
+  const handleRemove = async () => {
+    await removeItem(cartItem.product.id);
+    redirect("/cart"); // Reload the page to reflect changes
+  };
 
   return (
-    <div>
-      <div className="flex flex-wrap items-center gap-3 xs:flex-col sm:flex-col md:flex-row lg:flex-row">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
+    <div className="flex items-center justify-between p-4 border-b">
+      <div>
+      <Image
+          src={cartItem.product.imageUrl}
+          alt={cartItem.product.name}
           width={200}
           height={200}
           className="rounded-lg"
         />
-        <div>
-          <Link href={"/products/" + product.id} className="font-bold">
-            {product.name}
+        <Link href={"/products/" + cartItem.product.id} className="font-bold">
+            {cartItem.product.name}
           </Link>
-          <div>Price: {formatPrice(Number(product.price))}</div>
-          <div className="my-1 flex items-center gap-2">
-            Quantity:
-            <select
-              className="select-bordered select w-full max-w-[80px]"
-              defaultValue={quantity}
-              onChange={(e) => {
-                const newQuantity = parseInt(e.currentTarget.value);
-                startTransition(async () => {
-                  await setProductQuantity(product.id, newQuantity);
-                });
-              }}
-            >
-              {quantityOptions}
-            </select>
-          </div>
-          <div className="flex items-center gap-3">
-            Total: {formatPrice(Number(product.price) * quantity)}
-            {isPending && (
-              <span className="loading loading-spinner loading-sm" />
-            )}
-          </div>
-          <button
-            className="btn btn-error btn-sm mt-2"
+        <p className="text-sm text-gray-500">{cartItem.product.description}</p>
+
+      </div>
+      <div className="flex items-center gap-4">
+      <div>{formatPrice(Number(cartItem.product.price))}</div>
+        <input
+          type="number"
+          defaultValue={cartItem.quantity}
+          onChange={handleQuantityChange}
+          className="w-16 p-2 border rounded-lg"
+          min={1}
+        />
+        <button className="btn btn-error btn-sm mt-2"
             disabled={isPending}
             onClick={() => {
               startTransition(async () => {
-                await removeItem(product.id);
+                handleRemove();
               });
-            }}
-          >
-            Remove Item
-          </button>
-        </div>
+            }}>
+          Remove
+        </button>
       </div>
-      <div className="divider" />
     </div>
   );
 }

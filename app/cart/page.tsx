@@ -1,6 +1,6 @@
 import { getCart } from "@/src/lib/db/cart";
 import CartEntry from "./CartEntry";
-import { setProductQuantity, removeItem } from "./actions"; // Import removeItem
+import { setProductQuantity, removeItem } from "./actions";
 import { formatPrice } from "@/src/lib/format";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { getUser } from "@/src/lib/db/user";
@@ -36,13 +36,13 @@ export default async function cartPage() {
           <CartEntry
             cartItem={cartItem}
             setProductQuantity={setProductQuantity}
-            removeItem={removeItem} // Pass removeItem directly
+            removeItem={removeItem}
           />
         </div>
       ))}
       {!cart?.items.length && <p>Your cart is empty</p>}
-      <div className="flex flex-col items-end sm:items-center">
-        <p className="mb-3 font-bold">
+      <div className="flex flex-col items-end items-center">
+        <p className="mt-4 mb-3 font-bold">
           Total: {formatPrice(cart?.subtotal || 0)}
         </p>
         <CheckoutButton
