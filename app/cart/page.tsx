@@ -24,15 +24,21 @@ export default async function cartPage() {
   const cart = await getCart();
 
   return (
-    <div className="container mx-auto p-4 flex flex-col bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-3xl mb-6 font-bold">Your Cart</h1>
+    <div className="container mx-auto flex flex-col rounded-lg bg-gray-100 p-4 shadow-md">
+      <h1 className="mb-6 text-3xl font-bold">
+        Your Cart:{" "}
+        {cart?.items.length === 1
+          ? "1 Item"
+          : `${cart?.items.length || 0} Items`}
+      </h1>
       {cart?.items.map((cartItem) => (
-        <CartEntry
-          key={cartItem.id}
-          cartItem={cartItem}
-          setProductQuantity={setProductQuantity}
-          removeItem={removeItem} // Pass removeItem directly
-        />
+        <div key={cartItem.id}>
+          <CartEntry
+            cartItem={cartItem}
+            setProductQuantity={setProductQuantity}
+            removeItem={removeItem} // Pass removeItem directly
+          />
+        </div>
       ))}
       {!cart?.items.length && <p>Your cart is empty</p>}
       <div className="flex flex-col items-end sm:items-center">
