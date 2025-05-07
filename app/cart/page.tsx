@@ -41,7 +41,7 @@ export default async function cartPage() {
         </div>
       ))}
       {!cart?.items.length && <p>Your cart is empty</p>}
-      <div className="flex flex-col items-end items-center">
+      <div className="flex flex-col items-center">
         <p className="mt-4 mb-3 font-bold">
           Total: {formatPrice(cart?.subtotal || 0)}
         </p>
@@ -60,7 +60,7 @@ export default async function cartPage() {
               : null
           }
         />
-        <p className="text-sm text-gray-500">
+        <p className="text-sm mt-5 text-gray-500">
           *You will be redirected to Stripe to complete your purchase.
         </p>
       </div>
