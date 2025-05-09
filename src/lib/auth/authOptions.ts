@@ -15,8 +15,15 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, user }) {
-      session.user.id = user.id;
+    async session({ session, user }) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: session.user?.email || "" },
+      });
+
+      if (dbUser) {
+        session.user.isAdmin = dbUser.isAdmin;
+      }
+
       return session;
     },
   },

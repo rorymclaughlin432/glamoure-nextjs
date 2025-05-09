@@ -21,8 +21,9 @@ export default function QuantitySelector({
 
   const handleDecrement = () => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-      setProductQuantity(productId, quantity - 1);
+      const newQty = quantity - 1;
+      setQuantity(newQty);
+      setProductQuantity(productId, newQty);
     }
   };
 

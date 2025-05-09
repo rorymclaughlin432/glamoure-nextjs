@@ -1,3 +1,5 @@
+"use server";
+
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { prisma } from "@/src/lib/db/prisma";
 import { redirect } from "next/navigation";
@@ -9,12 +11,21 @@ export const metadata = {
 };
 
 async function addProduct(formData: FormData) {
-  "use server";
+
 
   const session = await getServerSession(authOptions);
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
+  }
+
+  // Check if the user is an admin
+  const user = await prisma.user.findUnique({
+    where: { email: session.user?.email || "" },
+  });
+
+  if (!user?.isAdmin) {
+    redirect("/access-denied");
   }
 
   const name = formData.get("name")?.toString();
@@ -48,6 +59,15 @@ export default async function AddProductPage() {
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
+  }
+
+  // Check if the user is an admin
+  const user = await prisma.user.findUnique({
+    where: { email: session.user?.email || "" },
+  });
+
+  if (!user?.isAdmin) {
+    redirect("/access-denied");
   }
 
   return (

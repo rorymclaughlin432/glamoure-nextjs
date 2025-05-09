@@ -45,10 +45,13 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
         {user && (
           <>
             <li>
-              <Link href="/orders">
-                Your Orders
-              </Link>
+              <Link href="/orders">Your Orders</Link>
             </li>
+            {user?.isAdmin && (
+              <li>
+                <Link href="/admin">Admin Dashboard</Link>
+              </li>
+            )}
             <li>
               <button onClick={() => signOut({ callbackUrl: "/" })}>
                 Sign Out
