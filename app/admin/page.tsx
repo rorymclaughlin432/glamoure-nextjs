@@ -21,20 +21,9 @@ export default async function admin() {
     where: { email: session.user?.email || "" },
   });
 
-  if (!user?.isAdmin) {
+  if (!user || !user.isAdmin) {
     redirect("/access-denied");
   }
-
-  if (!user) {
-    return (
-      <div className="container mx-auto p-4">
-        <p className="text-center text-lg text-red-500">
-          You must be logged in to view your orders.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="mb-4 text-2xl font-bold">
