@@ -80,10 +80,11 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  isAdmin       Boolean   @default(false)
   accounts      Account[]
   sessions      Session[]
   Cart          Cart[]
-  orders         Order[]
+  orders        Order[]
 
   @@map("users")
 }
