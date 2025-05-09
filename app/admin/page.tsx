@@ -4,7 +4,7 @@ import { authOptions } from "@/src/lib/auth/authOptions";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function admin(formData: FormData) {
+export default async function admin() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -46,7 +46,7 @@ export default async function admin(formData: FormData) {
         Manage your store settings and view analytics.
       </p>
       <p className="mb-4 text-lg">You can add products to the site.</p>
-      <Link href="/admin/add-product" className="btn btn-primary mb-4">
+      <Link href="/add-product" className="btn btn-primary mb-4">
         Add Product
       </Link>
     </div>
