@@ -31,7 +31,7 @@ export default function CartEntry({
   };
 
   return (
-    <div className="flex items-center justify-between p-4 border-b">
+    <div className="lg:flex md:flex items-center justify-between p-4 border-b">
       <div>
       <Image
           src={cartItem.product.imageUrl}
@@ -46,7 +46,7 @@ export default function CartEntry({
         <p className="text-sm text-gray-500">{cartItem.product.description}</p>
 
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 pt-3">
       <div>{formatPrice(Number(cartItem.product.price))}</div>
         <input
           type="number"
