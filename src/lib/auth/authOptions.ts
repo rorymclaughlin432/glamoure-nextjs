@@ -20,7 +20,12 @@ export const authOptions: NextAuthOptions = {
         where: { email: session.user?.email || "" },
       });
 
-      if (dbUser) {
+
+      if(!dbUser) {
+        throw new Error("User not found");
+      }
+
+      if(dbUser.isAdmin) {
         session.user.isAdmin = dbUser.isAdmin;
       }
 
